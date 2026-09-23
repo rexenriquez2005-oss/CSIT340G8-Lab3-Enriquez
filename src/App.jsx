@@ -1,34 +1,35 @@
-const Header = (props) => {
-  return <h1 style={{ color: "#61dafb" }}>{props.course}</h1>;
+const Header = ({ course }) => {
+  return <h1 style={{ color: "#61dafb" }}>{course}</h1>;
 };
 
-const Part = (props) => {
+const Part = ({ part }) => {
   return (
     <p>
-      {props.name} <span style={{ color: "#a7f3d0" }}>{props.exercises}</span>
+      {part.name} <span style={{ color: "#a7f3d0" }}>{part.exercises}</span>
     </p>
   );
 };
 
-const Content = (props) => {
+const Content = ({ part1, part2, part3 }) => {
   return (
     <div style={{ color: "#e2e8f0", fontSize: "1.1rem", lineHeight: "1.8" }}>
-      <Part name={props.part1} exercises={props.exercises1} />
-      <Part name={props.part2} exercises={props.exercises2} />
-      <Part name={props.part3} exercises={props.exercises3} />
+      <Part part={part1} />
+      <Part part={part2} />
+      <Part part={part3} />
     </div>
   );
 };
 
-const Total = (props) => {
+const Total = ({ part1, part2, part3 }) => {
+  const total = part1.exercises + part2.exercises + part3.exercises;
   return (
     <p style={{ color: "#fef08a", fontSize: "1.2rem", marginTop: "20px" }}>
-      <strong>Total of {props.total} exercises</strong>
+      <strong>Total of {total} exercises</strong>
     </p>
   );
 };
 
-const Footer = (props) => {
+const Footer = ({ name, courseCode, section }) => {
   return (
     <footer
       style={{
@@ -39,9 +40,9 @@ const Footer = (props) => {
       }}
     >
       <hr style={{ borderColor: "#334155", marginBottom: "20px" }} />
-      <p>{props.name}</p>
+      <p>{name}</p>
       <p>
-        {props.courseCode} - {props.section}
+        {courseCode} - {section}
       </p>
     </footer>
   );
@@ -49,12 +50,15 @@ const Footer = (props) => {
 
 const App = () => {
   const course = "CSIT327 - Information Management 2";
-  const part1 = "CSIT321 - Applications Development and Emerging Technologies";
-  const exercises1 = 3;
-  const part2 = "IT317 - Project Management for IT";
-  const exercises2 = 3;
-  const part3 = "RIZAL031 - The Life and Works of Rizal";
-  const exercises3 = 3;
+  const part1 = {
+    name: "CSIT321 - Applications Development and Emerging Technologies",
+    exercises: 3,
+  };
+  const part2 = { name: "IT317 - Project Management for IT", exercises: 3 };
+  const part3 = {
+    name: "RIZAL031 - The Life and Works of Rizal",
+    exercises: 3,
+  };
 
   return (
     <div
@@ -69,15 +73,8 @@ const App = () => {
       }}
     >
       <Header course={course} />
-      <Content
-        part1={part1}
-        exercises1={exercises1}
-        part2={part2}
-        exercises2={exercises2}
-        part3={part3}
-        exercises3={exercises3}
-      />
-      <Total total={exercises1 + exercises2 + exercises3} />
+      <Content part1={part1} part2={part2} part3={part3} />
+      <Total part1={part1} part2={part2} part3={part3} />
       <Footer name="Rex III L. Enriquez" courseCode="CSIT340" section="G8" />
     </div>
   );
