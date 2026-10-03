@@ -10,18 +10,18 @@ const Part = ({ part }) => {
   );
 };
 
-const Content = ({ part1, part2, part3 }) => {
+const Content = ({ parts }) => {
   return (
     <div style={{ color: "#e2e8f0", fontSize: "1.1rem", lineHeight: "1.8" }}>
-      <Part part={part1} />
-      <Part part={part2} />
-      <Part part={part3} />
+      <Part part={parts[0]} />
+      <Part part={parts[1]} />
+      <Part part={parts[2]} />
     </div>
   );
 };
 
-const Total = ({ part1, part2, part3 }) => {
-  const total = part1.exercises + part2.exercises + part3.exercises;
+const Total = ({ parts }) => {
+  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises;
   return (
     <p style={{ color: "#fef08a", fontSize: "1.2rem", marginTop: "20px" }}>
       <strong>Total of {total} exercises</strong>
@@ -50,15 +50,14 @@ const Footer = ({ name, courseCode, section }) => {
 
 const App = () => {
   const course = "CSIT327 - Information Management 2";
-  const part1 = {
-    name: "CSIT321 - Applications Development and Emerging Technologies",
-    exercises: 3,
-  };
-  const part2 = { name: "IT317 - Project Management for IT", exercises: 3 };
-  const part3 = {
-    name: "RIZAL031 - The Life and Works of Rizal",
-    exercises: 3,
-  };
+  const parts = [
+    {
+      name: "CSIT321 - Applications Development and Emerging Technologies",
+      exercises: 3,
+    },
+    { name: "IT317 - Project Management for IT", exercises: 3 },
+    { name: "RIZAL031 - The Life and Works of Rizal", exercises: 3 },
+  ];
 
   return (
     <div
@@ -73,8 +72,8 @@ const App = () => {
       }}
     >
       <Header course={course} />
-      <Content part1={part1} part2={part2} part3={part3} />
-      <Total part1={part1} part2={part2} part3={part3} />
+      <Content parts={parts} />
+      <Total parts={parts} />
       <Footer name="Rex III L. Enriquez" courseCode="CSIT340" section="G8" />
     </div>
   );
