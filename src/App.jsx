@@ -1,5 +1,5 @@
 const Header = ({ course }) => {
-  return <h1 style={{ color: "#61dafb" }}>{course}</h1>;
+  return <h1 style={{ color: "#61dafb" }}>{course.name}</h1>;
 };
 
 const Part = ({ part }) => {
@@ -10,18 +10,18 @@ const Part = ({ part }) => {
   );
 };
 
-const Content = ({ parts }) => {
+const Content = ({ course }) => {
   return (
     <div style={{ color: "#e2e8f0", fontSize: "1.1rem", lineHeight: "1.8" }}>
-      <Part part={parts[0]} />
-      <Part part={parts[1]} />
-      <Part part={parts[2]} />
+      {course.parts.map((part) => (
+        <Part key={part.name} part={part} />
+      ))}
     </div>
   );
 };
 
-const Total = ({ parts }) => {
-  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises;
+const Total = ({ course }) => {
+  const total = course.parts.reduce((sum, part) => sum + part.exercises, 0);
   return (
     <p style={{ color: "#fef08a", fontSize: "1.2rem", marginTop: "20px" }}>
       <strong>Total of {total} exercises</strong>
@@ -49,15 +49,17 @@ const Footer = ({ name, courseCode, section }) => {
 };
 
 const App = () => {
-  const course = "CSIT327 - Information Management 2";
-  const parts = [
-    {
-      name: "CSIT321 - Applications Development and Emerging Technologies",
-      exercises: 3,
-    },
-    { name: "IT317 - Project Management for IT", exercises: 3 },
-    { name: "RIZAL031 - The Life and Works of Rizal", exercises: 3 },
-  ];
+  const course = {
+    name: "CSIT327 - Information Management 2",
+    parts: [
+      {
+        name: "CSIT321 - Applications Development and Emerging Technologies",
+        exercises: 3,
+      },
+      { name: "IT317 - Project Management for IT", exercises: 3 },
+      { name: "RIZAL031 - The Life and Works of Rizal", exercises: 3 },
+    ],
+  };
 
   return (
     <div
@@ -72,8 +74,8 @@ const App = () => {
       }}
     >
       <Header course={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Content course={course} />
+      <Total course={course} />
       <Footer name="Rex III L. Enriquez" courseCode="CSIT340" section="G8" />
     </div>
   );
